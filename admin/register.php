@@ -1,3 +1,53 @@
+
+
+<?php 
+include 'dbconnect.php';
+
+if(isset($_POST['submit'])){
+
+
+    $fname=$_POST["fname"];
+    $lname=$_POST["lname"];
+    $email=$_POST["email"];
+    $password=$_POST["password"];
+    $cpassword=$_POST["cpassword"];
+    // date_default_timezone_set('Africa/Kigali');
+
+    // $date=date('Y-m-d h:i:s, time()');
+
+    if($password==$cpassword){
+
+        $sql="SELECT * FROM users WHERE email='$email'";
+        $result=mysqli_query($conn,$sql);
+
+if(!$result->num_rows>0){
+    $sql="INSERT INTO users(fname,lname,email,pwd)  VALUES('$fname','$lname','$email','$password')";
+    $result=mysqli_query($conn,$sql);
+
+    if($result){
+        echo "<script> alert('woe ! successfullty registered')</script>";
+    }
+    
+    else{
+        echo "<script> alert('something went wrong')</script>";
+    }
+}else{
+    echo "<script> alert('user already exist')</script>";
+}
+       
+
+}else{
+    echo "<script> alert('password doesn'nt match')</script>";
+}
+    
+    }
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,7 +109,7 @@
 
 
 
-<a  id="contact">
+
 <section class="my-4">
     <div class="py-4">
         <h2 class="text-center">
@@ -67,7 +117,7 @@
         </h2>
     </div>
    <div class="w-50 m-auto ">
-   <form action="contactUs.php" method="POST">
+   <form action="" method="POST">
    <div class="form-group"><label for="">First name</label><input class="form-control required" type="text" name="fname" id=""></div>
         <div class="form-group"><label for="">Last name</label><input type="text" class="form-control required"  name="lname" id=""></div>
         <div class="form-group"><label for="">Email</label><input type="text" class="form-control required"  name="email" id=""></div>
@@ -75,12 +125,12 @@
         <div class="form-group"><label for="">Password</label><input type="password" class="form-control required"  name="password" id=""></div>
         <div class="form-group"><label for=""> Confirm Password</label><input type="password" class="form-control required"  name="cpassword" id=""></div>
 
-       <button type="submit" class="btn btn-success">Register</button>
+       <button type="submit" name="submit" class="btn btn-success">Register</button>
        <p>Have account ? <a href="index.php">Login</a></p>
     </form>
    </div>
 </section>
-</a>
+
    
 
 
