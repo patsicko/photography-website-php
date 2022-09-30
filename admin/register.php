@@ -68,7 +68,8 @@
     </div>
    <div class="w-50 m-auto ">
    <form action="contactUs.php" method="POST">
-
+   <div class="form-group"><label for="">First name</label><input class="form-control required" type="text" name="fname" id=""></div>
+        <div class="form-group"><label for="">Last name</label><input type="text" class="form-control required"  name="lname" id=""></div>
         <div class="form-group"><label for="">Email</label><input type="text" class="form-control required"  name="email" id=""></div>
 
         <div class="form-group"><label for="">Password</label><input type="password" class="form-control required"  name="password" id=""></div>
