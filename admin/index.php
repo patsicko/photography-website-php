@@ -1,3 +1,51 @@
+<?php
+include 'dbconnect.php';
+
+error_reporting(0);
+
+session_start();
+
+if(isset($_SESSION['fname']) && $_SESSION['lname']){
+
+  header("Location:dashboard.php");
+}
+
+
+if(isset($_POST['submit'])){
+  $email=$_POST['email'];
+  $password=md5($_POST['password']);
+
+
+
+  $sql="SELECT * FROM users WHERE email='$email' AND pwd='$password'";
+
+  $result=mysqli_query($conn,$sql);
+
+  if($result->num_rows>0){
+
+
+    $row=mysqli_fetch_assoc($result);
+    $_SESSION['fname']=$row['fname'];
+    $_SESSION['lname']=$row['lname'];
+
+    header('Location:dashboard.php');
+  }else{
+    echo "<script>alert('Email or Password may be incorrect.')</script>";
+  }
+
+}
+
+
+
+
+?>
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,13 +115,13 @@
         </h2>
     </div>
    <div class="w-50 m-auto ">
-   <form action="contactUs.php" method="POST">
+   <form action="" method="POST">
 
         <div class="form-group"><label for="">Email</label><input type="text" class="form-control required"  name="email" id=""></div>
 
         <div class="form-group"><label for="">Password</label><input type="password" class="form-control required"  name="password" id=""></div>
 
-       <button type="submit" class="btn btn-success">Login</button>
+       <button type="submit" name="submit" class="btn btn-success">Login</button>
        <p>Don't have account ? <a href="register.php">Create account here</a></p>
     </form>
    </div>

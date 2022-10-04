@@ -2,6 +2,16 @@
 
 <?php 
 include 'dbconnect.php';
+error_reporting(0);
+
+session_start();
+
+
+
+
+
+
+
 
 if(isset($_POST['submit'])){
 
@@ -9,13 +19,13 @@ if(isset($_POST['submit'])){
     $fname=$_POST["fname"];
     $lname=$_POST["lname"];
     $email=$_POST["email"];
-    $password=$_POST["password"];
-    $cpassword=$_POST["cpassword"];
+    $password=md5($_POST["password"]);
+    $cpassword=md5($_POST["cpassword"]);
     // date_default_timezone_set('Africa/Kigali');
 
     // $date=date('Y-m-d h:i:s, time()');
 
-    if($password==$cpassword){
+    if($password==$cpassword){                                                                                                                                                                                  
 
         $sql="SELECT * FROM users WHERE email='$email'";
         $result=mysqli_query($conn,$sql);
