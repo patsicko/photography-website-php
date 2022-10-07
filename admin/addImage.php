@@ -1,29 +1,30 @@
-<?php
+<?php 
 include 'dbconnect.php';
-error_reporting(0);
 if(isset($_POST['addImage'])){
   $filename=$_FILES['imageFile']['name'];
-  
   $tempname=$_FILES['imageFile']['tmp_name'];
-   $folder="uploads/".$filename;
+  $folder="/uploads/".$filename;
+
+  date_default_timezone_set('Africa/Kigali');
+  $date=date('Y-m-d h:i:s a',time());
+
+  $sql="INSERT INTO images(cat_id,filename,added_at) VALUES('1','$filename','$date')";
+
+mysqli_query($conn,$sql);
+
+if(move_uploaded_file($tempname,$folder)){
+  echo "<script> alert('Image successfully uploaded.')</script>";
+}else{
+  die(mysqli_error($conn));
+}
 
 
-   $sql=" INSERT INTO images(cat_id,filename,added_at) VALUES('1','$filename','$date')";
-   mysqli_query($conn,$sql);
-
-   if(move_uploaded_file($tempname,$folder)){
-    echo " <script> alert('Image successfuly added.')</script>";
-   }else{
-    echo "<script>alert(' OOP! Something went wrong!.')</script>";
-   }
 
 
 }
 
 
 ?>
-
-
 
 
 
@@ -173,7 +174,7 @@ if(isset($_POST['addImage'])){
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form  action="" method="POST"  enctype="multipart/form-data">
+              <form  action="" method="post" enctype="multipart/form-data">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Category Name</label>
@@ -204,14 +205,35 @@ if(isset($_POST['addImage'])){
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>
-                        <a href="#" title="Edit Category "><span class="nav-icon far fa-edit"></span>
+                 <?php
+                 foreach($records as $key){
+                  $counter++;
+                  ?>
+                 <tr>
+              <td> <?php   echo $counter ?> </td>
+              <td> <img src="uploads/<?php echo $key->filename; ?>" class="img-fluid pb-3" width="30%" height="30%">     </td>
+
+             
+
+             <td>
+
+              <a href="#" title="Edit Category "><span class="nav-icon far fa-edit"></span>
                         </a>&nbsp;&nbsp;<a href="#" title="Delete Category"><span class="nav-icon far fa-trash"></span></a>
                       </td>
                     </tr>
+              <?php
+
+                 }
+                 
+                
+                 ?>
+
+
+
+
+
+                    
+                       
                     
                   </tbody>
                 </table>
