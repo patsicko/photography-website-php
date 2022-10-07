@@ -1,7 +1,7 @@
 # Photography-website
 ## Languages:
 
-- HTML5
+-HTML5
 
 -CSS3
 
